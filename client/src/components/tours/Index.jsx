@@ -1,6 +1,39 @@
 // Fill in the missing code
 
+import React, { useEffect, useState } from 'react';
+import { Container } from 'react-bootstrap';
+import Axios from 'axios';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+
 const Index = function ({user}) {
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      await getBlogs();
+    })();
+  }, []);
+
+  const getBlogs = async () => {
+    const blogsResp = await Axios.get('/api/blogs');
+    if (blogsResp.status === 200) setBlogs(blogsResp.data);
+  };
+
+  const deleteBlog = async blog => {
+    try {
+      const resp = await Axios.post('/api/blogs/delete', {
+        id: blog._id
+      });
+
+      if (resp.status === 200) toast("The blog was deleted successfully", {type: toast.TYPE.SUCCESS});
+
+      await getBlogs();
+    } catch (error) {
+      toast("There was an error deleting the blog", {type: toast.TYPE.ERROR});
+    }
+  };
 
   return (
     <Container className="my-5">
