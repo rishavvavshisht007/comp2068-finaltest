@@ -48,6 +48,8 @@ function Routes ({user, setUser}) {
 
           In your own words, please explain what is happening in the logic below.
           ANSWER HERE:
+           the logic is that these router are routing to edit and new pages 
+           also it works as rendering the components.
         */
       }
       <Route exact path="/tours" render={
